@@ -3,6 +3,10 @@ import styled from "styled-components";
 import { Button } from "@mui/material";
 import ImgAvatar from "../assets/ImgAvatar/imgAvatar";
 import Image from "next/image";
+import { doc, updateDoc } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "../config/firebase";
+import { useRouter } from "next/router";
 const StyledContainer = styled.div`
   width: 100%;
   height: 100vh;
@@ -36,8 +40,20 @@ interface IAvatar {
   index: number;
 }
 const SetAvatar = () => {
-  const [avatar, setAvatar] = useState(false);
+  // const [avatar, setAvatar] = useState(false);
+  const router = useRouter();
+  const [loggedInUser, loading, _error] = useAuthState(auth);
   const [selectAvatar, setSelectAvatar] = useState<IAvatar>({ index: NaN });
+  const setProfilePicture = async () => {
+    if (selectAvatar === undefined) {
+    } else {
+      const imgRef = doc(db, "users", loggedInUser?.email as string);
+      await updateDoc(imgRef, {
+        imageUser: ImgAvatar[selectAvatar],
+      });
+      router.push("/chat");
+    }
+  };
   return (
     <StyledContainer>
       <h1>Pick an avatar as your profile picture</h1>
@@ -53,13 +69,18 @@ const SetAvatar = () => {
               height={100}
               onClick={() => {
                 setSelectAvatar(index);
-                setAvatar(true);
               }}
             ></Image>
           );
         })}
       </StyledWrapAvatars>
-      <Button variant="contained" color="secondary">
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => {
+          setProfilePicture();
+        }}
+      >
         Set AS PROFILE PICTURE
       </Button>
     </StyledContainer>
