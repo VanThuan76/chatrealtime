@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import styled from "styled-components";
 import Contact from "../components/contact/contact";
+import MainWelcome from "../components/home/mainWelcome";
 import { auth, db } from "../config/firebase";
 import Login from "./login";
 const StyledContainerChat = styled.div`
@@ -16,7 +17,7 @@ const StyledContainerChat = styled.div`
   .container {
     width: 80%;
     height: 80%;
-    background-color: #00000076;
+    background-color: #1B2430;
     display: grid;
     grid-template-columns: 25% 75%;
   }
@@ -64,7 +65,7 @@ const Chat = () => {
     <StyledContainerChat>
       <div className="container">
         <Contact currentUser={currentUser}></Contact>
-        <div>Test</div>
+        <MainWelcome></MainWelcome>
       </div>
     </StyledContainerChat>
   );

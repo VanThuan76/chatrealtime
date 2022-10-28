@@ -13,32 +13,36 @@ function Contact({ currentUser }) {
   }, [currentUser]);
   const StyledContainerContact = styled.div`
     width: 100%;
-    height: 100%
-    background-color: red;
+    height: 100%;
+    background-color: #1c2533;
+    color: #fff;
     display: flex;
-    flex-direction: columns;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    
-    
   `;
   const StyledWrapUser = styled.div`
+    padding: 10% 0;
     display: flex;
-    flex-direction: rows;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     gap: 5px;
+    .imageUser{
+      border-radius: 50%;
+    }
   `;
   return (
     <>
       {currentUserName && currentUserImage && (
         <StyledContainerContact>
+          <StyledWrapUser>
           <div className="brand">
             <MainLogo></MainLogo>
           </div>
           <div className="contacts"></div>
-          <StyledWrapUser>
             <Image
+              className="imageUser"
               src={currentUserImage}
               alt="imageUser"
               width={100}
