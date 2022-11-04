@@ -1,5 +1,5 @@
 import Image from "next/image"
-import LogoWelcome from "../../assets/robot.gif"
+import LogoWelcome from "../../static/robot.gif"
 import styled from "styled-components"
 const StyledContainerWelcome = styled.div`
   width:100%;

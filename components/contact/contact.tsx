@@ -1,8 +1,12 @@
 import Image from "next/image";
+import { type } from "os";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import MainLogo from "../home/mainLogo";
-function Contact({ currentUser }) {
+type Contact = {
+  currentUser: object,
+}
+function Contact({ currentUser }:Contact) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   useEffect(() => {

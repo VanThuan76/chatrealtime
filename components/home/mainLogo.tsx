@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
-import LogoChat from "../../assets/logo.svg";
+import LogoChat from "../../static/logo.svg";
 const StyledWrapHeaderLogin = styled.div`
   display: flex;
   flex-direction: row;

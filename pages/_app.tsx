@@ -8,7 +8,6 @@ import { useEffect } from "react";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Link from "next/link";
 export default function App({ Component, pageProps }: AppProps) {
   const [loggedInUser, loading, _error] = useAuthState(auth);
   const notifySucess = () => {
@@ -46,16 +45,14 @@ export default function App({ Component, pageProps }: AppProps) {
   if (loading) return <Loading></Loading>;
   if (!loggedInUser) {
     return(
-
       <Login></Login>
       )
-
   }
   return(
-
-    <>
-    <ToastContainer></ToastContainer>
-  <Component {...pageProps} />;
+  <>
+  <Component href="/setAvatar" {...pageProps} prefetch={loggedInUser.emailVerified}>
+  <ToastContainer></ToastContainer>
+    </Component>;
   </> 
     )
 }

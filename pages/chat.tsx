@@ -37,6 +37,7 @@ const Chat = () => {
     const getADocument = async () => {
       const ref = doc(db, "users", loggedInUser?.email as string);
       const docSnap = await getDoc(ref);
+      console.log(docSnap.data())
       if (docSnap.exists()) {
         setCurrentUser({
           username: `${docSnap.data().username}`,
@@ -44,23 +45,19 @@ const Chat = () => {
         });
       }
     };
-    if (loggedInUser) {
       getADocument();
-    }
-    // if (!loggedInUser) {
-    //   return <Login></Login>;
   }, []);
-  useEffect(() => {
-    const checkUser = async () => {
-      if (currentUser) {
-        // if (currentUser.avatar) {
-        // }\
-      } else {
-        // await router.push("/setAvatar");
-      }
-    };
-    checkUser();
-  }, [currentUser]);
+  // useEffect(() => {
+  //   const checkUser = async () => {
+  //     if (currentUser) {
+  //       // if (currentUser.avatar) {
+  //       // }\
+  //     } else {
+  //       // await router.push("/setAvatar");
+  //     }
+  //   };
+  //   checkUser();
+  // }, [currentUser]);
   return (
     <StyledContainerChat>
       <div className="container">

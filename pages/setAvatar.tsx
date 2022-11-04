@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import styled from "styled-components";
 import { Button } from "@mui/material";
-import ImgAvatar from "../assets/ImgAvatar/imgAvatar";
+import ImgAvatar from "../static/ImgAvatar/ImgAvatar";
 import Image from "next/image";
 import { doc, updateDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loading from "./loading";
+console.log(ImgAvatar)
 const StyledContainer = styled.div`
   width: 100%;
   height: 100vh;
@@ -64,19 +65,28 @@ const SetAvatar = () => {
   const [spinnerLoad, setSpinnerLoad] = useState(false);
   const [loggedInUser, loading, _error] = useAuthState(auth);
   const [selectAvatar, setSelectAvatar] = useState<IAvatar>({ index: NaN });
+  
+  useEffect(() => {
+    router.prefetch("/chat");
+}, [])
   const setProfilePicture = async () => {
+    setTimeout(() => {
+      setSpinnerLoad(true);
+    },2000)
     try {
       const imgRef = doc(db, "users", loggedInUser?.email as string);
       await updateDoc(imgRef, {
         imageUser: ImgAvatar[selectAvatar],
       });
-      setSpinnerLoad(true);
       router.push("/chat");
     } catch (error) {
       console.log("This is issue" + error)
       notifyError()
     }
   };
+  if (loading) return <Loading></Loading>;
+  if (!loggedInUser) {
+  }
   return (
     <>
     <StyledContainer>
@@ -108,10 +118,10 @@ const SetAvatar = () => {
         Set AS PROFILE PICTURE
       </Button>
     </StyledContainer>
+    <ToastContainer></ToastContainer>
     {!spinnerLoad && (
       <Loading></Loading>
     )}
-    <ToastContainer></ToastContainer>
     </>
   );
 };

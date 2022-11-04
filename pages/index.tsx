@@ -1,10 +1,29 @@
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import Link from "next/link";
-import SetAvatar from "./setAvatar";
-export default function Layout() {
+import { useRouter } from "next/router";
+import { useEffect,HTMLAttributes,ReactNode } from "react";
+type Layout = {
+  children: ReactNode,
+  href: string
+  prefetch?: boolean
+} & HTMLAttributes<HTMLAnchorElement>
+export default function Layout({children,href,prefetch=false}:Layout) {
+  const router = useRouter();
+  useEffect(() => {
+      router.prefetch(href);
+      handleRouter()
+  }, [])
+  const handleRouter =async () => {
+    try {
+      if(prefetch){
+         router.push(href);
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
   return (
+    <>
     <div className={styles.container}>
       <Head>
         <title>Chat Realtime App</title>
@@ -14,9 +33,8 @@ export default function Layout() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Link href="/setAvatar">
-        <SetAvatar></SetAvatar>
-      </Link>
     </div>
+      {children}
+    </>
   );
 }
